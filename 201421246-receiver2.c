@@ -12,7 +12,7 @@ typedef struct
 	char data_buff[1024];
 } msg_t;
 
-int main(int argc, char *argv[])
+int main()
 {
 	int msqid;
 	int i;
@@ -20,11 +20,7 @@ int main(int argc, char *argv[])
 	struct msqid_ds msqstat;
 
 
-	if(argc<2)
-	{
-		perror("parameter for the msg type is required");
-		exit(1);
-	}
+	
 
 	if(-1==(msqid=msgget((key_t)99999,IPC_CREAT|0666)))
 	{
@@ -41,7 +37,7 @@ int main(int argc, char *argv[])
 	
 	while(1)
 	{
-		if(-1==msgrcv(msqid,&data, sizeof(msg_t)-sizeof(long), atoi(argv[1]), 0))
+		if(-1==msgrcv(msqid,&data, sizeof(msg_t)-sizeof(long), 2, 0))
 		{
 			perror("msgrcv() error");
 			exit(1);
